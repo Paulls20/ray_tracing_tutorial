@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::Write;
+use itertools::Itertools;
 
 const WIDTH: i32 = 1024;
 const HEIGHT: i32 = 768;
@@ -9,12 +10,10 @@ type Vec3f = [f32; 3];
 
 fn generate_frame_buffer() -> Vec<Vec3f> {
     let mut frame_buffer: Vec<Vec3f> = vec![[0f32, 0f32, 0f32]; FRAME_SIZE];
-    for j in 0..HEIGHT {
-        for i in 0..WIDTH {
-            let index: usize = (i + j * WIDTH) as usize;
-            let element: Vec3f = [(j as f32 / HEIGHT as f32), (i as f32 / WIDTH as f32), 0f32];
-            frame_buffer[index] = element;
-        }
+    for (i, j) in (0..WIDTH).cartesian_product(0..HEIGHT) {
+        let index: usize = (i + j * WIDTH) as usize;
+        let element: Vec3f = [(j as f32 / HEIGHT as f32), (i as f32 / WIDTH as f32), 0f32];
+        frame_buffer[index] = element;
     }
     frame_buffer
 }
