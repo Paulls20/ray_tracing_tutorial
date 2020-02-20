@@ -21,12 +21,11 @@ fn generate_frame_buffer(sphere: &Sphere) -> Vec<Vec3f> {
     const FOV: f32 = std::f32::consts::PI / 2f32;
     for (i, j) in (0..WIDTH).cartesian_product(0..HEIGHT) {
         let index: usize = (i + j * WIDTH) as usize;
-        let element = Vec3f(j as f32 / HEIGHT as f32, i as f32 / WIDTH as f32, 0f32);
+        //let element = Vec3f(j as f32 / HEIGHT as f32, i as f32 / WIDTH as f32, 0f32);
         let x =  (2f32 * (i as f32 + 0.5f32) / WIDTH as f32  - 1f32) * (FOV / 2f32).tan() * WIDTH as f32 / HEIGHT as f32;
         let y = -(2f32 * (j as f32 + 0.5f32)/ HEIGHT as f32 - 1f32) * (FOV / 2f32).tan();
         let dir = Vec3f(x, y, -1f32).normalize();
         frame_buffer[index] = cast_ray(Vec3f(0f32, 0f32, 0f32), dir, sphere);
-        //frame_buffer[index] = element;
     }
     frame_buffer
 }
@@ -55,6 +54,6 @@ fn render(sphere: Sphere) {
 }
 
 fn main() {
-    let s = Sphere::new(Vec3f(0f32, 0f32, 0f32), 10f32);
+    let s = Sphere::new(Vec3f(-3f32, 0f32, -16f32), 2f32);
     render(s);
 }
