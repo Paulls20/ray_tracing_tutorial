@@ -1,6 +1,6 @@
 use std::ops::*;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct Vec3f(pub f32, pub f32, pub f32);
 
 impl Vec3f {
@@ -45,15 +45,30 @@ impl Mul<f32> for Vec3f {
     }
 }
 
+#[derive(Clone)]
+pub struct Material {
+    pub diffuse_color : Vec3f
+}
+
+impl Material {
+    pub fn new(diffuse_color: Vec3f) -> Material {
+        Material { diffuse_color }
+    }
+}
 
 pub struct Sphere {
     center: Vec3f,
-    radius: f32
+    radius: f32,
+    material: Material
 }
 
 impl Sphere {
-    pub fn new(center: Vec3f, radius: f32) -> Sphere {
-        Sphere { center, radius}
+    pub fn new(center: Vec3f, radius: f32, material: Material) -> Sphere {
+        Sphere { center, radius, material}
+    }
+
+    pub fn get_material(&self) -> Material {
+        self.material.clone()
     }
 }
 
