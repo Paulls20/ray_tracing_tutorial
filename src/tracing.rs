@@ -45,7 +45,18 @@ impl Mul<f32> for Vec3f {
     }
 }
 
-#[derive(Clone)]
+pub struct Light {
+    pub position: Vec3f,
+    pub intensity: f32,
+}
+
+impl Light {
+    pub fn new(position: Vec3f, intensity: f32) -> Light {
+        Light { position, intensity }
+    }
+}
+
+#[derive(Copy, Clone)]
 pub struct Material {
     pub diffuse_color : Vec3f
 }
@@ -69,6 +80,10 @@ impl Sphere {
 
     pub fn get_material(&self) -> Material {
         self.material.clone()
+    }
+
+    pub fn get_center(&self) -> Vec3f {
+        self.center.clone()
     }
 }
 
